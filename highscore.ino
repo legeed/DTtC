@@ -16,13 +16,13 @@ void initHighscore(){
 
 void saveHighscore(unsigned int score){
   gb.display.fill(DARKGRAY);
-  if(score < highscore[NUM_HIGHSCORE-1]){//if it's a highscore
+  if(score > highscore[NUM_HIGHSCORE-1]){//if it's a highscore
     if(drawNewHighscore(score)){
       gb.getDefaultName(name[NUM_HIGHSCORE-1]);
       gb.gui.keyboard("NEW HIGHSCORE!NAME?", name[NUM_HIGHSCORE-1]);
       highscore[NUM_HIGHSCORE-1] = score;
-      for(byte i=NUM_HIGHSCORE-1; i>0; i--){ //bubble sorting FTW
-        if(highscore[i-1] > highscore[i]){
+      for(byte i=(NUM_HIGHSCORE-1); i>0; i--){ //bubble sorting FTW
+        if( highscore[i] > highscore[i-1] ){
           char tempName[NAMELENGTH];
           strcpy(tempName, name[i-1]);
           strcpy(name[i-1], name[i]);
@@ -45,28 +45,28 @@ void saveHighscore(unsigned int score){
   }
   else{
       String scoreStr = "Score: " + String(score);
-      gb.gui.popup(scoreStr.c_str(), 20);
+      gb.gui.popup(scoreStr.c_str(), 75);
   }
 }
 
 void drawHighScores(){
-  gb.display.fill(DARKGRAY);
   while(true){
     if(gb.update()){
       gb.display.clear();
-      gb.display.cursorX = 9+random(0,2);
-      gb.display.cursorY = 0+random(0,2);
-      gb.display.println("BEST SCORE");
+      gb.display.fill(DARKGRAY);
+      gb.display.setColor(WHITE);
+      gb.display.cursorX = 3+random(0,2);
+      gb.display.cursorY = 2+random(0,2);
+      gb.display.println("-= HALL OF FAME =- ");
       gb.display.textWrap = false;
-      gb.display.cursorX = 0;
-      gb.display.cursorY = gb.display.fontHeight*2;
       for(byte thisScore=0; thisScore<NUM_HIGHSCORE; thisScore++){
+        gb.display.cursorX = 2;
+        gb.display.cursorY = gb.display.fontHeight*2 + gb.display.fontHeight*thisScore;
         if(highscore[thisScore]==0)
           gb.display.print('-');
         else
-          gb.display.print(name[thisScore]);
-        gb.display.cursorX = gb.display.width()-4*gb.display.fontWidth;
-        gb.display.cursorY = gb.display.fontHeight*2 + gb.display.fontHeight*thisScore;
+        gb.display.print(name[thisScore]);
+        gb.display.cursorX = gb.display.width()-5*gb.display.fontWidth;
         gb.display.println(highscore[thisScore]);
       }
       if(gb.buttons.released(BUTTON_A) || gb.buttons.released(BUTTON_B) || gb.buttons.released(BUTTON_C)){
@@ -101,7 +101,7 @@ boolean drawNewHighscore(unsigned int score){
       gb.display.println(score);
       gb.display.setFontSize(1);
       
-      gb.display.cursorX = 0;
+      gb.display.cursorX = 1;
       gb.display.cursorY = gb.display.height() - (gb.display.fontHeight * 5);
       gb.display.setColor(LIGHTGREEN);
       gb.display.print("\n Best  ");
@@ -113,7 +113,7 @@ boolean drawNewHighscore(unsigned int score){
       gb.display.cursorX = 0;
       gb.display.cursorY = gb.display.height() - (gb.display.fontHeight * 1);
       gb.display.setColor(GRAY);
-      gb.display.print(" B: SAVE");
+      gb.display.print(" (B) : SAVE");
     }
   }
 }

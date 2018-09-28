@@ -12,7 +12,7 @@
 
 
 #include <Gamebuino-Meta.h>
-#define NUM_HIGHSCORE 5
+#define NUM_HIGHSCORE 8
 #define NAMELENGTH 12
 
 struct Point {
@@ -125,16 +125,22 @@ const char* startMenu[MENU_LENGTH] = {
 int useless_var = 0;
 
 const SaveDefault savefileDefaults[] = {
-  { 0, SAVETYPE_INT, 9999, 0 },
+  { 0, SAVETYPE_INT, 0, 0 },
   { 1, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
-  { 2, SAVETYPE_INT, 9999, 0 },
+  { 2, SAVETYPE_INT, 0, 0 },
   { 3, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
-  { 4, SAVETYPE_INT, 9999, 0 },
+  { 4, SAVETYPE_INT, 0, 0 },
   { 5, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
-  { 6, SAVETYPE_INT, 9999, 0 },
+  { 6, SAVETYPE_INT, 0, 0 },
   { 7, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
-  { 8, SAVETYPE_INT, 9999, 0 },
+  { 8, SAVETYPE_INT, 0, 0 },
   { 9, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
+  { 10, SAVETYPE_INT, 0, 0 },
+  { 11, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
+  { 12, SAVETYPE_INT, 0, 0 },
+  { 13, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
+  { 14, SAVETYPE_INT, 0, 0 },
+  { 15, SAVETYPE_BLOB, NAMELENGTH+1, 0 },
 };
 
 //////////////
@@ -203,7 +209,7 @@ void beginGame() {
 void endGame() {
   game_running = false;
   saveHighscore(current_score);
-  gb.gui.popup("HA HA You lose !", 50);
+  //gb.gui.popup("HA HA You lose !", 50);
 }
 
 void updateBall() {
